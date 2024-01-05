@@ -1,17 +1,22 @@
 import 'dart:async';
 
-import 'package:ancient_game/level.dart';
+import 'package:ancient_game/Components/input_manager.dart';
+import 'package:ancient_game/Components/level.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart' hide World;
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 
 enum Screen {mainMenu, game, credits, gameOver}
+
 
 class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection{
 
   bool onMobile, debug, showFPSOverlay;
   AncientGame({this.onMobile = false, this.debug = false, this.showFPSOverlay = false});
+  late InputManager inputManager;
 
   
   //Screen size
@@ -38,8 +43,9 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
       fpsText = FpsTextComponent(position: Vector2(0, size.y - 24));
       add(fpsText!);
     }
+    inputManager = InputManager.instance;
     
-    mainMenu(clear: false);
+    nextLevel(clear: false);
     await super.onLoad();
   }
 
@@ -47,6 +53,12 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   void onGameResize(Vector2 size) {
     fpsText?.position = Vector2(0, size.y - 24);
     super.onGameResize(size);
+  }
+
+  @override
+  KeyEventResult onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed,) {
+    if(!onMobile) inputManager.setKeyBoardEvent(event, keysPressed);
+    return KeyEventResult.handled;
   }
 
 

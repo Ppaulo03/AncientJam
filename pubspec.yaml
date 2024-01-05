@@ -23,6 +23,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-assets:
+  assets:
     - assets/tiles/
     - assets/images/
+    - assets/images/sprites/
+    - assets/images/sprites/player/
+    - assets/images/tilesets/
