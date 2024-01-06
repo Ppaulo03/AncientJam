@@ -10,7 +10,7 @@ enum PlayerState {
 
 class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRef<AncientGame>{
 
-  final Vector2 textureSize = Vector2(13, 17);
+  final Vector2 textureSize = Vector2(15, 17);
   PlayerAnimationAssets({super.position});
 
   SpriteAnimation _addAnimation(animacao, amount, stepTime)
