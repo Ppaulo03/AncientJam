@@ -16,8 +16,8 @@ class AlienDevice extends SpriteComponent with HasGameRef<AncientGame>
     priority = 31;
     sprite = Sprite(game.images.fromCache('sprites/player_sprite.png'));
     message = TextComponent(position: Vector2(0, size.y/4), text: '' ,textRenderer: TextPaint(style: const TextStyle(
-        fontFamily: 'joystix monospace',
-        fontSize: 5,
+        fontFamily: 'alien',
+        fontSize: 4,
         color: Color(0xffc7cfcc)
     ))); 
     add(message);

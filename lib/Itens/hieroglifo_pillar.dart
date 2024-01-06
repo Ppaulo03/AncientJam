@@ -14,10 +14,10 @@ class HieroglifoPillar extends BodyComponent<AncientGame>{
   Vector2 pos; Vector2 size = Vector2(16, 16);
   HieroglifoPillar({required this.pos});
 
-  String description = 'Hieroglifo';
+  String description = 'vs';
   bool lastState = false;
   bool scan = false;
-  late final SpriteComponentCustom sprite;
+  late SpriteComponentCustom sprite;
 
   @override
   Future<void> onLoad() {

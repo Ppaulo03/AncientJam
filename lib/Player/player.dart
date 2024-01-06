@@ -153,12 +153,6 @@ class Player extends BodyComponent<AncientGame>{
       lastObject.scan = true;
     }
 
-    else if(result != null && result.hitbox?.parent?.parent is AlienComputer)
-    {
-      lastObject = result.hitbox?.parent?.parent as AlienComputer;
-      wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
-    }
-
     else{
       lastObject = null;
       wallPos = null;
@@ -178,16 +172,17 @@ class Player extends BodyComponent<AncientGame>{
         Future.delayed(Duration(milliseconds: waitTimeMilliseconds), () => {
           isScanning = false,
           alienDevice.setMessage(text)
-      });
+        });
 
       }
-
+    }
+    else if(inputManager.commands[Command.showCoordenates]!)
+    {
       if(lastObject is AlienComputer) 
       {
         add(alienKeyboard);
         alienKeyboard.isActive = true;
       }
-      
     }
 
    

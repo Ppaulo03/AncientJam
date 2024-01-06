@@ -26,6 +26,10 @@ flutter:
     - family: joystix monospace
       fonts: 
         - asset: fonts/joystix monospace.otf
+        
+    - family: alien
+      fonts: 
+        - asset: fonts/Mystery_Font.otf
 
   assets:
     - assets/tiles/

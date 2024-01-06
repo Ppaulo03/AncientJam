@@ -1,8 +1,6 @@
 import 'dart:async';
 
-
 import 'package:ancient_game/Itens/alien_computer.dart';
-import 'package:ancient_game/Itens/hieroglifo_pillar.dart';
 import 'package:ancient_game/Player/player.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:flame/collisions.dart';

@@ -6,7 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-enum Key {a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p}
+enum Key {a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v}
 double keyD = 8;
 double keyOX = 0;
 double keyOY = 30;
@@ -31,6 +31,12 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
     Key.n: AlienKeyboardKey(key: 'n', position: Vector2(keyOX + keyD*5, keyOY + keyD), size: Vector2(keyD, keyD)),
     Key.o: AlienKeyboardKey(key: 'o', position: Vector2(keyOX + keyD*6, keyOY + keyD), size: Vector2(keyD, keyD)),
     Key.p: AlienKeyboardKey(key: 'p', position: Vector2(keyOX + keyD*7, keyOY + keyD), size: Vector2(keyD, keyD)),
+    Key.q: AlienKeyboardKey(key: 'q', position: Vector2(keyOX + keyD*8, keyOY + keyD), size: Vector2(keyD, keyD)),
+    Key.r: AlienKeyboardKey(key: 'r', position: Vector2(keyOX + keyD*2, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    Key.s: AlienKeyboardKey(key: 's', position: Vector2(keyOX + keyD*3, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    Key.t: AlienKeyboardKey(key: 't', position: Vector2(keyOX + keyD*4, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    Key.u: AlienKeyboardKey(key: 'u', position: Vector2(keyOX + keyD*5, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    Key.v: AlienKeyboardKey(key: 'v', position: Vector2(keyOX + keyD*6, keyOY + keyD*2), size: Vector2(keyD, keyD)),
   };
 
   late TextComponent message;
@@ -45,8 +51,8 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
       add(key);
     }
     message = TextComponent(position: Vector2(0, 0), text: '' ,textRenderer: TextPaint(style: const TextStyle(
-        fontFamily: 'joystix monospace',
-        fontSize: 5,
+        fontFamily: 'alien',
+        fontSize: 4,
         color: Color(0xffc7cfcc)
     )));
     add(message);
@@ -82,8 +88,8 @@ class AlienKeyboardKey extends SpriteComponent with TapCallbacks, HasGameRef<Anc
     sprite = Sprite(game.images.fromCache('sprites/player_sprite.png'));
     super.onLoad();
     add(TextComponent(position: Vector2(0, 0), text: key, textRenderer: TextPaint(style: const TextStyle(
-        fontFamily: 'joystix monospace',
-        fontSize: 5,
+        fontFamily: 'alien',
+        fontSize: 3.75,
         color: Color(0xffc7cfcc)
     ))));
     hitbox = RectangleHitbox();
