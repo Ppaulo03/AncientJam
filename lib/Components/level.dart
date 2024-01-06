@@ -1,6 +1,8 @@
 import 'dart:async';
 
 
+import 'package:ancient_game/Itens/alien_computer.dart';
+import 'package:ancient_game/Itens/hieroglifo_pillar.dart';
 import 'package:ancient_game/Player/player.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:flame/collisions.dart';
@@ -82,7 +84,11 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
       switch(object.class_) {
         //add case to add objects
         case 'Player':
-          add(Player(pos: position));    
+          final Player player = Player(pos: position);
+          add(player); 
+          break;
+        case 'HieroglifoPillar':
+          add(AlienComputer(pos:position));
           break;
         default:
           break;

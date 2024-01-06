@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:ui';
 
+import 'package:ancient_game/Components/scanner_effect.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:flame/components.dart';
 
@@ -16,7 +18,8 @@ class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRe
   final double stepTime;
   final Vector2 textureSize = Vector2(16, 25);
   PlayerAnimationAssets({super.position, this.stepTime = 0.1});
-
+  
+  final ScannerEffect scannerEffect = ScannerEffect(Vector2(16, 25));
   
 
   SpriteAnimation _addAnimation(animacao, left, amount)
@@ -34,7 +37,16 @@ class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRe
     final animation = SpriteAnimation.fromFrameData(
       game.images.fromCache(path), data);
 
+    add(scannerEffect);
+
     return animation;
+  }
+
+
+  @override
+  void render(Canvas canvas) {
+    scannerEffect.render(canvas);
+    super.render(canvas);
   }
 
   @override

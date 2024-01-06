@@ -38,6 +38,6 @@
     <property name="Open" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="44" name="Cake" type="Item" x="152.5" y="141.5" width="21" height="17"/>
+  <object id="44" type="HieroglifoPillar" x="97" y="64" width="16" height="16"/>
  </objectgroup>
 </map>

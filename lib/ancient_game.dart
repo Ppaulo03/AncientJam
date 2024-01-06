@@ -66,8 +66,7 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   {
     if(clear) removeAll([cam, gameWorld]);
     gameWorld = nextScreen;
-    cam = CameraComponent.withFixedResolution(world:gameWorld ,width: width*blockSize, height: height*blockSize);
-    cam.viewfinder.anchor = Anchor.topLeft;
+    cam = CameraComponent.withFixedResolution(world:gameWorld ,width: width*blockSize/2, height: height*blockSize/2);
     addAll([cam, gameWorld]);
   }
 
