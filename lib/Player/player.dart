@@ -6,6 +6,7 @@ import 'package:ancient_game/Itens/alien_device.dart';
 import 'package:ancient_game/Itens/alien_keyboard.dart';
 import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/animation.dart';
+import 'package:ancient_game/Player/indicator_arrow.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:ancient_game/Components/input_manager.dart';
 
@@ -26,9 +27,12 @@ class Player extends BodyComponent<AncientGame>{
 
   late InputManager inputManager;
   late PlayerAnimationAssets animation;
+  late IndicatorArrow arrow;
+
   late  Offset rayOrigin;
   late  Offset rayDirection;
   final double rayDistance = 25;
+
   final int waitTimeMilliseconds = 1000;
   late final AlienDevice alienDevice;
   final AlienKeyboard alienKeyboard = AlienKeyboard();
@@ -56,6 +60,9 @@ class Player extends BodyComponent<AncientGame>{
       size: Vector2(16, 16),
     );
     add(alienDevice);
+
+    arrow = IndicatorArrow(playerSize: size);
+    add(arrow);
   }
 
   @override
@@ -71,9 +78,7 @@ class Player extends BodyComponent<AncientGame>{
           (wallPos!.y/game.blockSize).floorToDouble()*game.blockSize - position.y
               );
       canvas.drawRect(Rect.fromLTWH(blockPos.x, blockPos.y, 16, 16), Paint() ..color = Colors.red ..style = PaintingStyle.stroke);
-    }
-
-    
+    }  
   }
 
 
@@ -133,6 +138,9 @@ class Player extends BodyComponent<AncientGame>{
     body.linearVelocity = Vector2(horizontalMovement * moveSpeed, verticalMovement * moveSpeed);
     animation.setAnimation(body.linearVelocity);
     rayOrigin = const Offset(0, 0);
+
+    //arrow on direction of the movement
+    
   }
 
 
@@ -140,6 +148,7 @@ class Player extends BodyComponent<AncientGame>{
     if(body.linearVelocity.x != 0 || body.linearVelocity.y != 0) rayDirection = Offset(body.linearVelocity.x, body.linearVelocity.y);
       rayDirection = rayDirection / rayDirection.distance;
     
+    arrow.direction = rayDirection.toVector2();
     final Ray2 ray = Ray2(origin:position, direction:Vector2(rayDirection.dx, rayDirection.dy));
     final result = game.collisionDetection.raycast(ray, maxDistance:rayDistance);
     
