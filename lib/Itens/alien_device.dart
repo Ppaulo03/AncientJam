@@ -59,6 +59,7 @@ class AlienDevice extends SpriteAnimationGroupComponent with HasGameRef<AncientG
   void scan(){
     current = AnimationStates.scan;
     int time = (0.2*4*1000).round();
+    message.text = '';
     Future.delayed(Duration(milliseconds: time), (){
       current = AnimationStates.idle;
     });

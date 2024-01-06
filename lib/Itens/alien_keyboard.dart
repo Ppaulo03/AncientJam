@@ -6,7 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-enum Key {a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v}
+enum Key {a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, escape}
 double keyD = 8;
 double keyOX = 0;
 double keyOY = 30;
@@ -37,6 +37,7 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
     Key.t: AlienKeyboardKey(key: 't', position: Vector2(keyOX + keyD*4, keyOY + keyD*2), size: Vector2(keyD, keyD)),
     Key.u: AlienKeyboardKey(key: 'u', position: Vector2(keyOX + keyD*5, keyOY + keyD*2), size: Vector2(keyD, keyD)),
     Key.v: AlienKeyboardKey(key: 'v', position: Vector2(keyOX + keyD*6, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    Key.escape: AlienKeyboardKey(key: 'ESC', position: Vector2(keyOX, -keyOY/2 ), size: Vector2(keyD, keyD)),
   };
 
   late TextComponent message;
@@ -50,6 +51,7 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
       key.onStateChange = addKey;
       add(key);
     }
+
     message = TextComponent(position: Vector2(0, 0), text: '' ,textRenderer: TextPaint(style: const TextStyle(
         fontFamily: 'alien',
         fontSize: 4,
@@ -64,6 +66,13 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
   }
 
   void addKey(String key){
+    if(key == 'ESC'){
+      message.text = '';
+      isActive = false;
+      parent?.remove(this);
+      return;
+    } 
+
     message.text += key;
     if(message.text.length > 5){
       password = message.text;
@@ -71,8 +80,8 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
       isActive = false;
       parent?.remove(this);
     }
-  
   }
+
 }
 
 class AlienKeyboardKey extends SpriteComponent with TapCallbacks, HasGameRef<AncientGame>

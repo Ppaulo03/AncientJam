@@ -22,7 +22,7 @@ class ScannerEffect extends PositionComponent{
         _direction = -_direction;
       } else if (_scanPosition >= size.y) {
         _scanPosition = size.y;
-        isScanning = false;
+        _direction = -_direction;
       }
     }
     else if(scan)
