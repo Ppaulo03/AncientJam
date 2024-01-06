@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 
 
 enum Command{
-  moveLeft, moveRight, showCoordenates, showText, moveUp, moveDown
+  moveLeft, moveRight, openComputer, showText, moveUp, moveDown, exitComputer
 }
 
 class InputManager extends Component{
@@ -22,7 +22,8 @@ class InputManager extends Component{
     Command.moveUp: false,
     Command.moveDown: false,
     Command.showText: false,
-    Command.showCoordenates: false,
+    Command.openComputer: false,
+    Command.exitComputer: false,
   };
   
   void setKeyBoardEvent(RawKeyEvent event,  Set<LogicalKeyboardKey> keysPressed) {
@@ -45,7 +46,11 @@ class InputManager extends Component{
         setCommand(Command.showText, isKeyDown);
       }
       else if (event.logicalKey == LogicalKeyboardKey.keyG) {
-        setCommand(Command.showCoordenates, isKeyDown);
+        setCommand(Command.openComputer, isKeyDown);
+      }
+      else if(event.logicalKey == LogicalKeyboardKey.escape)
+      {
+        setCommand(Command.exitComputer, isKeyDown);
       }
     }
   }

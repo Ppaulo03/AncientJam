@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:ancient_game/Itens/alien_computer.dart';
 import 'package:ancient_game/Itens/alien_device.dart';
+import 'package:ancient_game/Itens/alien_device_pickable.dart';
 import 'package:ancient_game/Itens/alien_keyboard.dart';
 import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/animation.dart';
@@ -19,7 +20,7 @@ import 'package:flutter/material.dart';
 class Player extends BodyComponent<AncientGame>{
 
   
-  Vector2 pos; Vector2 size = Vector2(15, 25);
+  Vector2 pos; Vector2 size = Vector2(14, 17);
   Player({required this.pos});
 
   final double moveSpeed = 100;
@@ -35,7 +36,9 @@ class Player extends BodyComponent<AncientGame>{
 
   final int waitTimeMilliseconds = 1000;
   late final AlienDevice alienDevice;
+  bool hasAlienDevice = false;
   final AlienKeyboard alienKeyboard = AlienKeyboard();
+
 
 
   bool isScanning = false;
@@ -59,7 +62,6 @@ class Player extends BodyComponent<AncientGame>{
       position: Vector2(-game.blockSize*game.width/4 +7, game.blockSize*game.height/8 +8),
       size: Vector2(32, 32),
     );
-    add(alienDevice);
 
     arrow = IndicatorArrow(playerSize: size);
     add(arrow);
@@ -104,7 +106,17 @@ class Player extends BodyComponent<AncientGame>{
   @override
   void update(double dt) {
     super.update(dt);
-    if(alienKeyboard.isActive) return;
+    if(alienKeyboard.isActive) 
+    {
+      if(inputManager.commands[Command.exitComputer]!)
+      {
+        alienKeyboard.isActive = false;
+        alienKeyboard.password = '';
+        remove(alienKeyboard);
+      }
+      return;
+    }
+    
     _move(dt);
     _raycast();
     _useItem();
@@ -151,6 +163,20 @@ class Player extends BodyComponent<AncientGame>{
     arrow.direction = rayDirection.toVector2();
     final Ray2 ray = Ray2(origin:position, direction:Vector2(rayDirection.dx, rayDirection.dy));
     final result = game.collisionDetection.raycast(ray, maxDistance:rayDistance);
+
+    if(!hasAlienDevice)
+    {
+      if(result != null && result.hitbox?.parent?.parent is AlienDevicePickable){
+        lastObject = result.hitbox?.parent?.parent as AlienDevicePickable;
+        wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
+      }
+      else
+      {
+        wallPos = null;
+        lastObject = null;
+      }
+      return;
+    }
     
     if(result != null && result.hitbox?.parent is RectangleComponent){
       lastObject = null;
@@ -168,24 +194,30 @@ class Player extends BodyComponent<AncientGame>{
     }
   }
 
-
   void _useItem(){
     if(inputManager.commands[Command.showText]!){
       inputManager.commands[Command.showText] = false;
       if(isScanning) return;
-      print(lastObject);
-      if(lastObject is ScannableItem) 
+      if(lastObject is AlienDevicePickable) 
+      {
+        hasAlienDevice = true;
+        add(alienDevice);
+        lastObject.pick();
+        lastObject = null;
+      }
+      else if(lastObject is ScannableItem) 
       {
         final String text = lastObject!.description;
         isScanning = true;
-        Future.delayed(Duration(milliseconds: waitTimeMilliseconds), () => {
+        alienDevice.scan();
+        Future.delayed(Duration(milliseconds: (0.2*4*1000).round()), () => {
           isScanning = false,
           alienDevice.setMessage(text)
         });
 
       }
     }
-    else if(inputManager.commands[Command.showCoordenates]!)
+    else if(inputManager.commands[Command.openComputer]!)
     {
       if(lastObject is AlienComputer) 
       {

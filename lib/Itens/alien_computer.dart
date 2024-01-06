@@ -1,6 +1,3 @@
-
-
-
 import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Itens/sprite_component_custom.dart';
 import 'package:flame/components.dart';

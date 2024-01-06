@@ -1,31 +1,19 @@
-
-
-import 'package:ancient_game/Itens/collider_item.dart';
+import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Itens/sprite_component_custom.dart';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:ancient_game/ancient_game.dart';
 
 import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
 
-
-class ScannableItem extends BodyComponent<AncientGame>{
-  Vector2 pos; Vector2 size = Vector2(16, 16);
-  ScannableItem({required this.pos});
-
-  String description = 'ab';
-  bool lastState = false;
-  bool scan = false;
-  late SpriteComponentCustom sprite;
+class AlienDevicePickable extends ScannableItem{
+ 
+  AlienDevicePickable({required super.pos});
 
   @override
   Future<void> onLoad() {
     final image = game.images.fromCache('sprites/player_sprite.png');
     sprite = SpriteComponentCustom(sprite: Sprite(image), position: Vector2(-size.x/2, -size.y/2), size: size);
-    add(sprite);
-    add(ColliderItem(position: pos, size: size));
-
     return super.onLoad();
   }
 
@@ -47,19 +35,8 @@ class ScannableItem extends BodyComponent<AncientGame>{
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if(scan != lastState){
-      lastState = scan;
-      if(scan){
-        sprite.scannerEffect.scan = true;
-      }
-      else{
-        sprite.scannerEffect.isScanning = false;
-      }
-    }
-    scan = false;
+  void pick(){
+    parent?.remove(this);
   }
-  
+
 }

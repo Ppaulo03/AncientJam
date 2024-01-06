@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:ancient_game/Itens/alien_computer.dart';
+import 'package:ancient_game/Itens/alien_device_pickable.dart';
+import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/player.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:flame/collisions.dart';
@@ -85,8 +87,16 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
           final Player player = Player(pos: position);
           add(player); 
           break;
-        case 'HieroglifoPillar':
+        case 'ScannableItem':
+          add(ScannableItem(pos:position));
+          break;
+
+        case 'AlienComputer':
           add(AlienComputer(pos:position));
+          break;
+
+        case 'AlienDevice':
+          add(AlienDevicePickable(pos:position));
           break;
         default:
           break;
