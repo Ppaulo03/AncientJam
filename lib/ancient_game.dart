@@ -21,8 +21,8 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   
   //Screen size
   final double blockSize = 16;
-  final double width = 18;
-  final double height = 11;
+  final double width = 28;
+  final double height = 21;
 
   Screen currentScreen = Screen.mainMenu;
 

@@ -56,8 +56,8 @@ class Player extends BodyComponent<AncientGame>{
     game.cam.follow(this);
 
     alienDevice = AlienDevice(
-      position: Vector2(-game.blockSize*game.width/4, game.blockSize*game.height/8),
-      size: Vector2(16, 16),
+      position: Vector2(-game.blockSize*game.width/4 +7, game.blockSize*game.height/8 +8),
+      size: Vector2(32, 32),
     );
     add(alienDevice);
 

@@ -1,0 +1,43 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "C:/Users/Geziel/Documents/GameJams/Sizes_Of_Wonderland/assets/tiles/level-02.tmx": {
+            "scale": 3.7637152777777776,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 144.13948982886663,
+                "y": 88.21071082614512
+            }
+        },
+        "dungeon.tmx": {
+            "scale": 16,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 108.03125,
+                "y": 74.9375
+            }
+        }
+    },
+    "last.imagePath": "C:/Users/Geziel/Documents/GameJams/AncientJam/assets/images/tilesets",
+    "map.height": 60,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 60,
+    "openFiles": [
+    ],
+    "project": "ancient.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

@@ -21,7 +21,7 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
 
   @override
   FutureOr<void> onLoad() async{
-    final TiledComponent level = await TiledComponent.load('level-$levelName.tmx', Vector2.all(16), useAtlas: false);
+    final TiledComponent level = await TiledComponent.load('dungeon.tmx', Vector2.all(16), useAtlas: false);
     add(level);
     _addColliders(level.tileMap);
     _addObjects(level.tileMap);
