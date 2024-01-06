@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:ancient_game/Itens/alien_computer.dart';
 import 'package:ancient_game/Itens/alien_device.dart';
 import 'package:ancient_game/Itens/alien_keyboard.dart';
-import 'package:ancient_game/Itens/hieroglifo_pillar.dart';
+import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/animation.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:ancient_game/Components/input_manager.dart';
@@ -147,9 +147,9 @@ class Player extends BodyComponent<AncientGame>{
       lastObject = null;
       wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
     }
-    else if(result != null && result.hitbox?.parent?.parent is HieroglifoPillar)
+    else if(result != null && result.hitbox?.parent?.parent is ScannableItem)
     {
-      lastObject = result.hitbox?.parent?.parent as HieroglifoPillar;
+      lastObject = result.hitbox?.parent?.parent as ScannableItem;
       lastObject.scan = true;
     }
 
@@ -165,7 +165,7 @@ class Player extends BodyComponent<AncientGame>{
       inputManager.commands[Command.showText] = false;
       if(isScanning) return;
       print(lastObject);
-      if(lastObject is HieroglifoPillar) 
+      if(lastObject is ScannableItem) 
       {
         final String text = lastObject!.description;
         isScanning = true;

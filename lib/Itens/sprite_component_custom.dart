@@ -23,6 +23,4 @@ class SpriteComponentCustom extends SpriteComponent
     super.render(canvas);
   }
     
-
-
 }

@@ -1,28 +1,19 @@
 import 'dart:async';
-import 'dart:ui';
 
-import 'package:ancient_game/Components/scanner_effect.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:flame/components.dart';
 
 enum PlayerState {
-
   idle,
   running,
-  jumping,
-  falling,
 }
 
 class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRef<AncientGame>{
 
-  final double stepTime;
-  final Vector2 textureSize = Vector2(16, 25);
-  PlayerAnimationAssets({super.position, this.stepTime = 0.1});
-  
-  final ScannerEffect scannerEffect = ScannerEffect(Vector2(16, 25));
-  
+  final Vector2 textureSize = Vector2(13, 17);
+  PlayerAnimationAssets({super.position});
 
-  SpriteAnimation _addAnimation(animacao, left, amount)
+  SpriteAnimation _addAnimation(animacao, amount, stepTime)
   {
     
     final data = SpriteAnimationData.sequenced(
@@ -30,24 +21,15 @@ class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRe
       stepTime: stepTime,
       textureSize: textureSize,
     );
-    String path = 'sprites/player/cake-alice-$animacao';
-    path += left ? '-left' : '-right';
-    path += '-sprite-sheet.png';
+    String path = 'sprites/player/player-$animacao-sheet.png';
 
     final animation = SpriteAnimation.fromFrameData(
       game.images.fromCache(path), data);
 
-    add(scannerEffect);
 
     return animation;
   }
 
-
-  @override
-  void render(Canvas canvas) {
-    scannerEffect.render(canvas);
-    super.render(canvas);
-  }
 
   @override
   FutureOr<void> onLoad(){
@@ -56,12 +38,10 @@ class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRe
 
     priority = 31;
     debugMode = game.debug;
-    size = Vector2(16, 25);
+    size = textureSize;
     animations = {
-      PlayerState.idle: _addAnimation('idle', false, 1),
-      PlayerState.running: _addAnimation('running', false, 4),
-      PlayerState.jumping: _addAnimation('jumping', false, 1),
-      PlayerState.falling: _addAnimation('falling', false, 1),
+      PlayerState.idle: _addAnimation('idle', 2, 0.25),
+      PlayerState.running: _addAnimation('run', 4, 0.1),
     };
     current = PlayerState.idle;
   }
@@ -84,6 +64,7 @@ class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRe
     if(current != newAnimation){
       current = newAnimation;
     }
+
   }
 
   

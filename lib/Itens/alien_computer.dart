@@ -1,7 +1,7 @@
 
 
 
-import 'package:ancient_game/Itens/hieroglifo_pillar.dart';
+import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Itens/sprite_component_custom.dart';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
@@ -10,7 +10,7 @@ import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
 
 
-class AlienComputer extends HieroglifoPillar{
+class AlienComputer extends ScannableItem{
  
   AlienComputer({required  super.pos});
 

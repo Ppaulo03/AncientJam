@@ -10,9 +10,9 @@ import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
 
 
-class HieroglifoPillar extends BodyComponent<AncientGame>{
+class ScannableItem extends BodyComponent<AncientGame>{
   Vector2 pos; Vector2 size = Vector2(16, 16);
-  HieroglifoPillar({required this.pos});
+  ScannableItem({required this.pos});
 
   String description = 'vs';
   bool lastState = false;
@@ -47,7 +47,7 @@ class HieroglifoPillar extends BodyComponent<AncientGame>{
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
-    @override
+  @override
   void update(double dt) {
     super.update(dt);
     if(scan != lastState){
