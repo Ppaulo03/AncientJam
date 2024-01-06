@@ -47,7 +47,6 @@ class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRe
   }
 
   bool _isFacingLeft = false;
-
   bool get isFacingLeft => _isFacingLeft;
   set isFacingLeft(bool value){
     if(value != isFacingLeft){
