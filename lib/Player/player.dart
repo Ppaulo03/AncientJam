@@ -55,7 +55,7 @@ class Player extends BodyComponent<AncientGame>{
     debugMode = false;
     await super.onLoad();
     inputManager = InputManager.instance;
-    animation = PlayerAnimationAssets();
+    animation = PlayerAnimationAssets(position: Vector2(0, -4));
     add(animation);
     rayOrigin = const Offset(0, 0);
     rayDirection = const Offset(1, 0);
@@ -96,7 +96,7 @@ class Player extends BodyComponent<AncientGame>{
       ..color = const Color.fromARGB(255, 1, 241, 53)
       ..style = PaintingStyle.stroke;
 
-    final shape = PolygonShape()..setAsBoxXY(size.x/2, size.y/2);
+    final shape = PolygonShape()..setAsBoxXY(size.x/2, (size.y/2)*0.5);
     final fixtureDef = FixtureDef(shape);
     final bodyDef = BodyDef()
       ..position = Vector2(pos.x + size.x/2, pos.y + size.y/2)
