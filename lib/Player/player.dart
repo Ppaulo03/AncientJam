@@ -212,7 +212,7 @@ class Player extends BodyComponent<AncientGame>{
     {
       if(result.distance! < 9)
       {
-        print('Over');
+        Future.delayed(const Duration(milliseconds: 500), () => game.gameOver());
       }
       audioController.pause('longScan');
     }

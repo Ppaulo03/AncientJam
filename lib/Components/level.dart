@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 class Level extends Forge2DWorld with HasGameRef<AncientGame>{
   final bool debug;
   final String levelName;
-  Door? door;
+  
   
 
   Level({required this.levelName, this.debug = false});
@@ -106,8 +106,8 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
           break;
         
         case 'Door':
-          door = Door(pos:position);
-          add(door!);
+          game.door = Door(pos:position);
+          add(game.door!);
           break;
 
         case 'Readable':
@@ -131,10 +131,6 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
           break;
       }
     }
-  }
-
-  void openDoor(){
-    door?.open();
   }
 
 }

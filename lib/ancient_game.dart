@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:ancient_game/Components/input_manager.dart';
 import 'package:ancient_game/Components/level.dart';
+import 'package:ancient_game/Itens/door.dart';
+import 'package:ancient_game/Screens/screens.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart' hide World;
@@ -20,13 +22,13 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   
   //Screen size
   final double blockSize = 16;
-  final double width = 28;
-  final double height = 21;
+  final double width = 14;
+  final double height = 10;
 
   Screen currentScreen = Screen.mainMenu;
 
   late CameraComponent cam;
-  late Level gameWorld;
+  late Forge2DWorld gameWorld;
 
   final List<String> levels = ['01'];
   int levelIndex = 0;
@@ -34,6 +36,7 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   FpsTextComponent? fpsText;
   String password = 'ababababa';
   bool gotIt = false;
+  Door? door;
 
   @override
   FutureOr<void> onLoad() async{
@@ -46,7 +49,7 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
     }
     inputManager = InputManager.instance;
     
-    nextLevel(clear: false);
+    mainMenu(clear: false);
     await super.onLoad();
   }
 
@@ -63,11 +66,15 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   }
 
 
-  void changeScreen(bool clear, Level nextScreen)
+  void changeScreen(bool clear, Forge2DWorld nextScreen)
   {
     if(clear) removeAll([cam, gameWorld]);
     gameWorld = nextScreen;
-    cam = CameraComponent.withFixedResolution(world:gameWorld ,width: width*blockSize/2, height: height*blockSize/2);
+    
+    cam = CameraComponent.withFixedResolution(world:gameWorld ,width: width*blockSize, height: height*blockSize);
+    if(currentScreen != Screen.game) cam.viewfinder.anchor = Anchor.topLeft;
+    
+   
     addAll([cam, gameWorld]);
   }
 
@@ -75,19 +82,21 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   void mainMenu({bool clear = true})
   {
     currentScreen = Screen.mainMenu;
+    changeScreen(clear, MainMenu());
   }
 
 
   void credits({bool clear = true})
   {
-
     currentScreen = Screen.credits;
+    changeScreen(clear, Credits());
   }
 
 
   void gameOver({bool clear = true})
   {
     currentScreen = Screen.gameOver;
+    changeScreen(clear, GameOver());
   }
 
 
@@ -100,8 +109,9 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
     }
     gotIt = false;
     if(levelIndex >= levels.length) return gameOver(clear: clear);
-    changeScreen(clear, Level(levelName:levels[levelIndex], debug: debug));
     currentScreen = Screen.game;
+    changeScreen(clear, Level(levelName:levels[levelIndex], debug: debug));
+    
   }
 
 
@@ -133,7 +143,7 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   {
     if(gotIt) return;
     gotIt = true;
-    gameWorld.openDoor();
+    door?.open();
   }
   
 }
