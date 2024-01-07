@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flame/components.dart';
 
-
 class ScannerEffect extends PositionComponent{
 
   ScannerEffect(Vector2 size):super(size: size, position: Vector2(0, 0));
@@ -23,6 +22,7 @@ class ScannerEffect extends PositionComponent{
       } else if (_scanPosition >= size.y) {
         _scanPosition = size.y;
         _direction = -_direction;
+
       }
     }
     else if(scan)

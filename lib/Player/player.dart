@@ -41,6 +41,8 @@ class Player extends BodyComponent<AncientGame>{
   bool hasAlienDevice = false;
   final AlienKeyboard alienKeyboard = AlienKeyboard();
 
+  late AudioPlayer scanLoop;
+
 
 
   bool isScanning = false;
@@ -67,6 +69,8 @@ class Player extends BodyComponent<AncientGame>{
 
     arrow = IndicatorArrow(playerSize: size);
     add(arrow);
+    scanLoop = await FlameAudio.loop('longScan.wav');
+    scanLoop!.pause();
   }
 
   @override
@@ -158,7 +162,7 @@ class Player extends BodyComponent<AncientGame>{
   }
 
 
-  void _raycast(){
+  void _raycast() {
     if(body.linearVelocity.x != 0 || body.linearVelocity.y != 0) rayDirection = Offset(body.linearVelocity.x, body.linearVelocity.y);
       rayDirection = rayDirection / rayDirection.distance;
     
@@ -176,6 +180,7 @@ class Player extends BodyComponent<AncientGame>{
       {
         wallPos = null;
         lastObject = null;
+        scanLoop.pause();
       }
       return;
     }
@@ -183,17 +188,21 @@ class Player extends BodyComponent<AncientGame>{
     if(result != null && result.hitbox?.parent is RectangleComponent){
       lastObject = null;
       wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
+      scanLoop.pause();
     }
 
     else if(result != null && result.hitbox?.parent?.parent is ScannableItem)
     {
       lastObject = result.hitbox?.parent?.parent as ScannableItem;
       lastObject.scan = true;
+      scanLoop.resume();
+      
     }
 
     else{
       lastObject = null;
       wallPos = null;
+      scanLoop.pause();
     }
   }
 
