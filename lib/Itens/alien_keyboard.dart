@@ -42,7 +42,10 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
 
   late TextComponent message;
   bool isActive = false;
+  bool reset = false;
   String password = '';
+
+  String answer = 'aaaaaaaaa';
 
   @override
   FutureOr<void> onLoad() {
@@ -51,8 +54,8 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
       key.onStateChange = addKey;
       add(key);
     }
-
-    message = TextComponent(position: Vector2(0, 0), text: '' ,textRenderer: TextPaint(style: const TextStyle(
+    size = Vector2(64, 16);
+    message = TextComponent(size: size, position: Vector2(0, 0), text: '' ,textRenderer: TextPaint(style: const TextStyle(
         fontFamily: 'alien',
         fontSize: 4,
         color: Color(0xffc7cfcc)
@@ -61,24 +64,49 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
 
     sprite = Sprite(game.images.fromCache('sprites/player_sprite.png'));
     position = Vector2(-20, -20);
-    size = Vector2(64, 16);
+    
     return super.onLoad();
+  }
+  
+  void countAnswers()
+  {
+    final firstItem = password.substring(0, 1);
+    final firstAnswer = answer.substring(0, 1);
+    // get pairs off chars
+    final pairs = <String>[];
+    final realPairs = <String>[];
+    for (var i = 1; i < password.length - 1; i++) {
+      pairs.add(password.substring(i, i + 2));
+      realPairs.add(answer.substring(i, i + 2));
+    }
+    int contRights = 0;
+    if (firstItem == firstAnswer) {
+      contRights++;
+    }
+    for (var i = 0; i < pairs.length; i++) {
+      if (pairs[i] == realPairs[i]) {
+        contRights++;
+      }
+    }
+    print(contRights);
   }
 
   void addKey(String key){
+    if(reset){
+      message.text = '';
+      reset = false;
+    }
     if(key == 'ESC'){
       message.text = '';
-      isActive = false;
       parent?.remove(this);
+      isActive = false;
       return;
-    } 
-
+    }
     message.text += key;
-    if(message.text.length > 5){
+    if(message.text.length >= game.password.length){
       password = message.text;
       message.text = '';
-      isActive = false;
-      parent?.remove(this);
+      reset = true;
     }
   }
 

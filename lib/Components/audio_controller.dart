@@ -10,7 +10,7 @@ class AudioController {
 
   AudioController._();
 
-  bool isMuted = false;
+  bool isMuted = true;
 
   final Map<String, AudioPlayer> _players = {};
 

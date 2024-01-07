@@ -32,6 +32,7 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   int levelIndex = 0;
 
   FpsTextComponent? fpsText;
+  String password = 'aaaaaaaaa';
 
   @override
   FutureOr<void> onLoad() async{
@@ -102,4 +103,28 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   }
 
 
+  int checkAnswer(String answer)
+  {
+    final firstItem = password.substring(0, 1);
+    final firstAnswer = answer.substring(0, 1);
+
+    // get pairs off chars
+    final pairs = <String>[];
+    final realPairs = <String>[];
+    for (var i = 1; i < password.length - 1; i+=2) {
+      pairs.add(password.substring(i, i + 2));
+      realPairs.add(answer.substring(i, i + 2));
+    }
+    int contRights = 0;
+    if (firstItem == firstAnswer) {
+      contRights++;
+    }
+    for (var i = 0; i < pairs.length; i++) {
+      if (pairs[i] == realPairs[i]) {
+        contRights++;
+      }
+    }
+    return contRights;
+  }
+  
 }
