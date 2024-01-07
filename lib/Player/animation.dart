@@ -40,7 +40,7 @@ class PlayerAnimationAssets extends SpriteAnimationGroupComponent with HasGameRe
     debugMode = game.debug;
     size = textureSize;
     animations = {
-      PlayerState.idle: _addAnimation('idle', 2, 0.25),
+      PlayerState.idle: _addAnimation('idle', 2, 0.35),
       PlayerState.running: _addAnimation('run', 4, 0.1),
     };
     current = PlayerState.idle;

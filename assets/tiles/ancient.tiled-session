@@ -35,8 +35,8 @@
             "scale": 5.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 56.454545454545446,
-                "y": 72
+                "x": 161,
+                "y": 61.63636363636364
             }
         },
         "dungeon.tmx#dugeon-assets2": {
@@ -61,9 +61,9 @@
     ],
     "project": "ancient.tiled-project",
     "recentFiles": [
-        "asset3.tsx",
         "dungeon.tsx",
         "dungeon.tmx",
+        "asset3.tsx",
         "C:/Users/Geziel/Documents/GameJams/Sizes_Of_Wonderland/assets/tiles/level-02.tmx"
     ],
     "tileset.embedInMap": false,

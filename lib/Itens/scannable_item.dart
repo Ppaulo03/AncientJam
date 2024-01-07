@@ -21,7 +21,7 @@ class ScannableItem extends BodyComponent<AncientGame>{
 
   @override
   Future<void> onLoad() {
-    final image = game.images.fromCache('sprites/player_sprite.png');
+    final image = game.images.fromCache('sprites/input-device.png');
     sprite = SpriteComponentCustom(sprite: Sprite(image), position: Vector2(-size.x/2, -size.y/2), size: size);
     add(sprite);
     add(ColliderItem(position: pos, size: size));
