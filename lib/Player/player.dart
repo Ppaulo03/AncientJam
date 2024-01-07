@@ -113,6 +113,20 @@ class Player extends BodyComponent<AncientGame>{
     super.update(dt);
     if(alienKeyboard.isActive) 
     {
+      if(alienKeyboard.password.isNotEmpty)
+      {
+        final rigths = game.checkAnswer(alienKeyboard.password);
+        if(rigths == 5)
+        {
+          alienKeyboard.isActive = false;
+          print('you win');
+        }
+        else
+        {
+          alienKeyboard.message.text = '    $rigths / 5';
+        }
+        alienKeyboard.password = '';
+      }
       if(inputManager.commands[Command.exitComputer]!)
       {
         alienKeyboard.isActive = false;
