@@ -61,7 +61,7 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
     )));
     add(message);
 
-    sprite = Sprite(game.images.fromCache('sprites/player_sprite.png'));
+    sprite = Sprite(game.images.fromCache('sprites/alien-computer-input.png'));
     position = Vector2(-20, -20);
     
     return super.onLoad();

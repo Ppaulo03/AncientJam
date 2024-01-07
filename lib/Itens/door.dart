@@ -16,17 +16,17 @@ class Door extends BodyComponent<AncientGame>{
 
   @override
   Future<void> onLoad() {
-    
-    final open = game.images.fromCache('sprites/player_sprite.png');
-    final closed = game.images.fromCache('sprites/player_sprite.png');
+    final open = game.images.fromCache('sprites/objects/door.png');
+    final closed = game.images.fromCache('sprites/objects/door-opened.png');
 
     sprites = SpriteGroupComponent();
+    sprites.anchor = Anchor.center;
     sprites.sprites = {
       'closed': Sprite(open, srcSize: Vector2(16, 16), srcPosition: Vector2(0, 0)),
-      'open': Sprite(closed, srcSize: Vector2(16, 16), srcPosition: Vector2(16, 0)),
+      'open': Sprite(closed, srcSize: Vector2(16, 16), srcPosition: Vector2(0, 0)),
     };
     sprites.current = 'closed';
-    
+    add(sprites);
     return super.onLoad();
   }
 
@@ -48,6 +48,7 @@ class Door extends BodyComponent<AncientGame>{
 
   void open(){
     sprites.current = 'open';
+    //disable body collision
     add(ColliderItem(position: pos, size: size));
   } 
   

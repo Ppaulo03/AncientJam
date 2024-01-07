@@ -6,6 +6,7 @@ import 'package:ancient_game/Itens/alien_computer.dart';
 import 'package:ancient_game/Itens/alien_device.dart';
 import 'package:ancient_game/Itens/alien_device_pickable.dart';
 import 'package:ancient_game/Itens/alien_keyboard.dart';
+import 'package:ancient_game/Itens/door.dart';
 import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/animation.dart';
 import 'package:ancient_game/Player/indicator_arrow.dart';
@@ -204,10 +205,16 @@ class Player extends BodyComponent<AncientGame>{
     {
       lastObject = result.hitbox?.parent?.parent as ScannableItem;
       lastObject.scan = true;
-      audioController.resume('longScan');
-      
+      audioController.resume('longScan');   
     }
-
+    else if(result != null && result.hitbox?.parent?.parent is Door)
+    {
+      if(result.distance! < 9)
+      {
+        print('Over');
+      }
+      audioController.pause('longScan');
+    }
     else{
       lastObject = null;
       wallPos = null;
