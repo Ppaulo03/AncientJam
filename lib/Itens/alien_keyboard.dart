@@ -7,7 +7,7 @@ import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
 enum Key {a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, escape}
-double keyD = 8;
+double keyD = 10;
 double keyOX = 0;
 double keyOY = 30;
 
@@ -94,9 +94,9 @@ class AlienKeyboardKey extends SpriteComponent with TapCallbacks, HasGameRef<Anc
   @override
   Future<void> onLoad() async{
     debugMode = false;
-    sprite = Sprite(game.images.fromCache('sprites/player_sprite.png'));
+    sprite = Sprite(game.images.fromCache('sprites/button-keyboard.png'));
     super.onLoad();
-    add(TextComponent(position: Vector2(0, 0), text: key, textRenderer: TextPaint(style: const TextStyle(
+    add(TextComponent(position: Vector2(size.x/8, size.y/8), text: key, textRenderer: TextPaint(style: const TextStyle(
         fontFamily: 'alien',
         fontSize: 3.75,
         color: Color(0xffc7cfcc)

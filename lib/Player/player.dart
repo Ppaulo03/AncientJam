@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:ancient_game/Components/audio_controller.dart';
 import 'package:ancient_game/Itens/alien_computer.dart';
 import 'package:ancient_game/Itens/alien_device.dart';
 import 'package:ancient_game/Itens/alien_device_pickable.dart';
@@ -12,12 +13,9 @@ import 'package:ancient_game/ancient_game.dart';
 import 'package:ancient_game/Components/input_manager.dart';
 
 import 'package:flame/extensions.dart';
-import 'package:flame/flame.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:flame_audio/flame_audio.dart';
-
 
 class Player extends BodyComponent<AncientGame>{
 
@@ -29,6 +27,7 @@ class Player extends BodyComponent<AncientGame>{
   final double jumpSpeed = 350;
 
   late InputManager inputManager;
+  late AudioController audioController;
   late PlayerAnimationAssets animation;
   late IndicatorArrow arrow;
 
@@ -41,7 +40,7 @@ class Player extends BodyComponent<AncientGame>{
   bool hasAlienDevice = false;
   final AlienKeyboard alienKeyboard = AlienKeyboard();
 
-  late AudioPlayer scanLoop;
+  
 
 
 
@@ -69,8 +68,8 @@ class Player extends BodyComponent<AncientGame>{
 
     arrow = IndicatorArrow(playerSize: size);
     add(arrow);
-    scanLoop = await FlameAudio.loop('longScan.wav');
-    scanLoop!.pause();
+    audioController = AudioController.instance;
+    audioController.addPlayer('longScan', 'longScan.wav',  loop: true);
   }
 
   @override
@@ -129,6 +128,7 @@ class Player extends BodyComponent<AncientGame>{
     
   }
 
+
   void _move(double dt){
     double horizontalMovement = 0;
     if(inputManager.commands[Command.moveLeft]!){
@@ -180,7 +180,7 @@ class Player extends BodyComponent<AncientGame>{
       {
         wallPos = null;
         lastObject = null;
-        scanLoop.pause();
+        audioController.pause('longScan');
       }
       return;
     }
@@ -188,21 +188,21 @@ class Player extends BodyComponent<AncientGame>{
     if(result != null && result.hitbox?.parent is RectangleComponent){
       lastObject = null;
       wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
-      scanLoop.pause();
+      audioController.pause('longScan');
     }
 
     else if(result != null && result.hitbox?.parent?.parent is ScannableItem)
     {
       lastObject = result.hitbox?.parent?.parent as ScannableItem;
       lastObject.scan = true;
-      scanLoop.resume();
+      audioController.resume('longScan');
       
     }
 
     else{
       lastObject = null;
       wallPos = null;
-      scanLoop.pause();
+      audioController.pause('longScan');
     }
   }
 
@@ -222,7 +222,7 @@ class Player extends BodyComponent<AncientGame>{
         final String text = lastObject!.description;
         isScanning = true;
         alienDevice.scan();
-        FlameAudio.play('scan.wav');
+        audioController.play('scan.wav');
         Future.delayed(Duration(milliseconds: (0.2*4*1000).round()), () => {
           isScanning = false,
           alienDevice.setMessage(text)
@@ -236,6 +236,8 @@ class Player extends BodyComponent<AncientGame>{
       {
         add(alienKeyboard);
         alienKeyboard.isActive = true;
+        audioController.pause('longScan.wav');
+        lastObject = null;
       }
     }
 

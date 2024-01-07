@@ -7,8 +7,6 @@ import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart' hide World;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flame_audio/flame_audio.dart';
-
 
 enum Screen {mainMenu, game, credits, gameOver}
 

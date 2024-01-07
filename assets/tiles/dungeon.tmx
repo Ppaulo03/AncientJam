@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#000000" nextlayerid="4" nextobjectid="4">
  <tileset firstgid="1" source="dungeon.tsx"/>
- <tileset firstgid="16" name="dugeon-assets2" tilewidth="17" tileheight="17" tilecount="13" columns="13">
+ <tileset firstgid="14" name="dugeon-assets2" tilewidth="17" tileheight="17" tilecount="13" columns="13">
   <grid orientation="orthogonal" width="18" height="18"/>
   <image source="../images/tilesets/dungeon-assets2.png" width="222" height="18"/>
  </tileset>
- <tileset firstgid="29" source="asset3.tsx"/>
+ <tileset firstgid="27" source="asset3.tsx"/>
  <layer id="1" name="Camada de Blocos 1" width="30" height="30">
   <data encoding="csv">
 9,2,3,2,3,2,3,2,3,2,3,2,3,2,3,2,3,2,3,2,3,2,3,2,3,2,3,2,3,2147483654,
@@ -76,7 +76,7 @@
  </layer>
  <objectgroup id="2" name="SpawnPoint" opacity="0.9">
   <object id="1" name="Player" type="Player" x="84.5625" y="58.875" width="12.5" height="8.625"/>
-  <object id="2" name="ScannableItem" type="ScannableItem" x="113.25" y="52.0625" width="12.5" height="8.625"/>
+  <object id="2" name="ScannableItem" type="AlienComputer" x="113.25" y="52.0625" width="12.5" height="8.625"/>
   <object id="3" name="AlienDevice" type="AlienDevice" x="112.125" y="70.0625" width="12.5" height="8.625"/>
  </objectgroup>
 </map>
