@@ -37,3 +37,4 @@ flutter:
     - assets/images/sprites/
     - assets/images/sprites/player/
     - assets/images/tilesets/
+    - assets/audio/

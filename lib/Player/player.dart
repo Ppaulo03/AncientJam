@@ -12,9 +12,11 @@ import 'package:ancient_game/ancient_game.dart';
 import 'package:ancient_game/Components/input_manager.dart';
 
 import 'package:flame/extensions.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 
 class Player extends BodyComponent<AncientGame>{
@@ -182,6 +184,7 @@ class Player extends BodyComponent<AncientGame>{
       lastObject = null;
       wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
     }
+
     else if(result != null && result.hitbox?.parent?.parent is ScannableItem)
     {
       lastObject = result.hitbox?.parent?.parent as ScannableItem;
@@ -210,6 +213,7 @@ class Player extends BodyComponent<AncientGame>{
         final String text = lastObject!.description;
         isScanning = true;
         alienDevice.scan();
+        FlameAudio.play('scan.wav');
         Future.delayed(Duration(milliseconds: (0.2*4*1000).round()), () => {
           isScanning = false,
           alienDevice.setMessage(text)
