@@ -29,14 +29,14 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
     Key.l: AlienKeyboardKey(key: 'l', position: Vector2(keyOX + keyD*3, keyOY + keyD), size: Vector2(keyD, keyD)),
     Key.m: AlienKeyboardKey(key: 'm', position: Vector2(keyOX + keyD*4, keyOY + keyD), size: Vector2(keyD, keyD)),
     Key.n: AlienKeyboardKey(key: 'n', position: Vector2(keyOX + keyD*5, keyOY + keyD), size: Vector2(keyD, keyD)),
-    Key.o: AlienKeyboardKey(key: 'o', position: Vector2(keyOX + keyD*6, keyOY + keyD), size: Vector2(keyD, keyD)),
-    Key.p: AlienKeyboardKey(key: 'p', position: Vector2(keyOX + keyD*7, keyOY + keyD), size: Vector2(keyD, keyD)),
-    Key.q: AlienKeyboardKey(key: 'q', position: Vector2(keyOX + keyD*8, keyOY + keyD), size: Vector2(keyD, keyD)),
-    Key.r: AlienKeyboardKey(key: 'r', position: Vector2(keyOX + keyD*2, keyOY + keyD*2), size: Vector2(keyD, keyD)),
-    Key.s: AlienKeyboardKey(key: 's', position: Vector2(keyOX + keyD*3, keyOY + keyD*2), size: Vector2(keyD, keyD)),
-    Key.t: AlienKeyboardKey(key: 't', position: Vector2(keyOX + keyD*4, keyOY + keyD*2), size: Vector2(keyD, keyD)),
-    Key.u: AlienKeyboardKey(key: 'u', position: Vector2(keyOX + keyD*5, keyOY + keyD*2), size: Vector2(keyD, keyD)),
-    Key.v: AlienKeyboardKey(key: 'v', position: Vector2(keyOX + keyD*6, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    // Key.o: AlienKeyboardKey(key: 'o', position: Vector2(keyOX + keyD*6, keyOY + keyD), size: Vector2(keyD, keyD)),
+    // Key.p: AlienKeyboardKey(key: 'p', position: Vector2(keyOX + keyD*7, keyOY + keyD), size: Vector2(keyD, keyD)),
+    // Key.q: AlienKeyboardKey(key: 'q', position: Vector2(keyOX + keyD*8, keyOY + keyD), size: Vector2(keyD, keyD)),
+    // Key.r: AlienKeyboardKey(key: 'r', position: Vector2(keyOX + keyD*2, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    // Key.s: AlienKeyboardKey(key: 's', position: Vector2(keyOX + keyD*3, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    // Key.t: AlienKeyboardKey(key: 't', position: Vector2(keyOX + keyD*4, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    // Key.u: AlienKeyboardKey(key: 'u', position: Vector2(keyOX + keyD*5, keyOY + keyD*2), size: Vector2(keyD, keyD)),
+    // Key.v: AlienKeyboardKey(key: 'v', position: Vector2(keyOX + keyD*6, keyOY + keyD*2), size: Vector2(keyD, keyD)),
     Key.escape: AlienKeyboardKey(key: 'ESC', position: Vector2(keyOX, -keyOY/2 ), size: Vector2(keyD, keyD)),
   };
 
@@ -45,7 +45,6 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
   bool reset = false;
   String password = '';
 
-  String answer = 'aaaaaaaaa';
 
   @override
   FutureOr<void> onLoad() {
@@ -68,28 +67,6 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
     return super.onLoad();
   }
   
-  void countAnswers()
-  {
-    final firstItem = password.substring(0, 1);
-    final firstAnswer = answer.substring(0, 1);
-    // get pairs off chars
-    final pairs = <String>[];
-    final realPairs = <String>[];
-    for (var i = 1; i < password.length - 1; i++) {
-      pairs.add(password.substring(i, i + 2));
-      realPairs.add(answer.substring(i, i + 2));
-    }
-    int contRights = 0;
-    if (firstItem == firstAnswer) {
-      contRights++;
-    }
-    for (var i = 0; i < pairs.length; i++) {
-      if (pairs[i] == realPairs[i]) {
-        contRights++;
-      }
-    }
-    print(contRights);
-  }
 
   void addKey(String key){
     if(reset){

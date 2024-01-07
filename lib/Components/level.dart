@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ancient_game/Itens/alien_computer.dart';
 import 'package:ancient_game/Itens/alien_device_pickable.dart';
+import 'package:ancient_game/Itens/door.dart';
 import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/player.dart';
 import 'package:ancient_game/ancient_game.dart';
@@ -16,12 +17,11 @@ import 'package:flutter/material.dart';
 class Level extends Forge2DWorld with HasGameRef<AncientGame>{
   final bool debug;
   final String levelName;
+  Door? door;
   
 
   Level({required this.levelName, this.debug = false});
   
-
-
   @override
   FutureOr<void> onLoad() async{
     final TiledComponent level = await TiledComponent.load('dungeon.tmx', Vector2.all(16), useAtlas: false);
@@ -89,7 +89,11 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
           add(player); 
           break;
         case 'ScannableItem':
-          add(ScannableItem(pos:position));
+          print(object.properties['description']!.value);
+          add(ScannableItem(pos:position)
+              ..spriteName = object.name
+              ..description = object.properties['description']!.value as String
+              );
           break;
 
         case 'AlienComputer':
@@ -98,6 +102,11 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
 
         case 'AlienDevice':
           add(AlienDevicePickable(pos:position));
+          break;
+        
+        case 'Door':
+          door = Door(pos:position);
+          add(door!);
           break;
         default:
           break;
@@ -118,6 +127,10 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
           break;
       }
     }
+  }
+
+  void openDoor(){
+    door?.open();
   }
 
 }

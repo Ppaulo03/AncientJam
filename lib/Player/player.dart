@@ -40,10 +40,6 @@ class Player extends BodyComponent<AncientGame>{
   bool hasAlienDevice = false;
   final AlienKeyboard alienKeyboard = AlienKeyboard();
 
-  
-
-
-
   bool isScanning = false;
   Vector2? wallPos;
   dynamic lastObject;
@@ -69,7 +65,7 @@ class Player extends BodyComponent<AncientGame>{
     arrow = IndicatorArrow(playerSize: size);
     add(arrow);
     audioController = AudioController.instance;
-    audioController.addPlayer('longScan', 'longScan.wav',  loop: true);
+    audioController.addPlayer('longScan', 'longScan.wav',  loop: true, volume: 0.5);
   }
 
   @override
@@ -107,7 +103,6 @@ class Player extends BodyComponent<AncientGame>{
 
   }
 
-
   @override
   void update(double dt) {
     super.update(dt);
@@ -116,15 +111,15 @@ class Player extends BodyComponent<AncientGame>{
       if(alienKeyboard.password.isNotEmpty)
       {
         final rigths = game.checkAnswer(alienKeyboard.password);
-        if(rigths == 5)
-        {
-          alienKeyboard.isActive = false;
-          print('you win');
+        if(rigths == 5) {
+          game.openDoor();
+          audioController.play('Correct.wav');
         }
-        else
-        {
-          alienKeyboard.message.text = '    $rigths / 5';
+        else{
+          audioController.play('Wrong.wav');
         }
+        
+        alienKeyboard.message.text = '$rigths / 5';
         alienKeyboard.password = '';
       }
       if(inputManager.commands[Command.exitComputer]!)

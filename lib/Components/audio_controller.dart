@@ -14,15 +14,15 @@ class AudioController {
 
   final Map<String, AudioPlayer> _players = {};
 
-  void addPlayer(String key, String song, {bool loop = false}) {
+  void addPlayer(String key, String song, {bool loop = false, double volume = 1}) {
     if (_players.containsKey(key)) return;
     if (loop) {
-      FlameAudio.loopLongAudio(song).then((value) {
+      FlameAudio.loopLongAudio(song, volume: volume).then((value) {
         _players[key] = value;
         value.pause();
       });
     } else {
-      FlameAudio.playLongAudio(song).then((value) {
+      FlameAudio.playLongAudio(song, volume: volume).then((value) {
         _players[key] = value;
         value.pause();
       });

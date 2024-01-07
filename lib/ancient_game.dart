@@ -26,13 +26,14 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   Screen currentScreen = Screen.mainMenu;
 
   late CameraComponent cam;
-  late World gameWorld;
+  late Level gameWorld;
 
   final List<String> levels = ['01'];
   int levelIndex = 0;
 
   FpsTextComponent? fpsText;
-  String password = 'aaaaaaaaa';
+  String password = 'ababababa';
+  bool gotIt = false;
 
   @override
   FutureOr<void> onLoad() async{
@@ -62,7 +63,7 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   }
 
 
-  void changeScreen(bool clear, World nextScreen)
+  void changeScreen(bool clear, Level nextScreen)
   {
     if(clear) removeAll([cam, gameWorld]);
     gameWorld = nextScreen;
@@ -97,6 +98,7 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
     {
       levelIndex = 0;
     }
+    gotIt = false;
     if(levelIndex >= levels.length) return gameOver(clear: clear);
     changeScreen(clear, Level(levelName:levels[levelIndex], debug: debug));
     currentScreen = Screen.game;
@@ -119,12 +121,19 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
     if (firstItem == firstAnswer) {
       contRights++;
     }
-    for (var i = 0; i < pairs.length; i++) {
-      if (pairs[i] == realPairs[i]) {
+    for (int i = 0; i < pairs.length; i++) {
+      if (pairs[i] == realPairs[i] || pairs[i].split('').reversed.join() == realPairs[i]) {
         contRights++;
       }
     }
     return contRights;
+  }
+
+  void openDoor()
+  {
+    if(gotIt) return;
+    gotIt = true;
+    gameWorld.openDoor();
   }
   
 }
