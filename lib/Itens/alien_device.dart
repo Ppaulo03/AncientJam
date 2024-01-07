@@ -45,6 +45,7 @@ class AlienDevice extends SpriteAnimationGroupComponent with HasGameRef<AncientG
         color: color
     ))); 
     add(message);
+    
   }
 
   void setMessage(String text){

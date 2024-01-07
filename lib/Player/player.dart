@@ -35,7 +35,7 @@ class Player extends BodyComponent<AncientGame>{
 
   late  Offset rayOrigin;
   late  Offset rayDirection;
-  final double rayDistance = 25;
+  final double rayDistance = 15;
 
   final int waitTimeMilliseconds = 1000;
   late final AlienDevice alienDevice;
@@ -57,7 +57,7 @@ class Player extends BodyComponent<AncientGame>{
     inputManager = InputManager.instance;
     animation = PlayerAnimationAssets(position: Vector2(0, -4));
     add(animation);
-    rayOrigin = const Offset(0, 0);
+    rayOrigin = const Offset(0, -4);
     rayDirection = const Offset(1, 0);
     game.cam.follow(this);
 
@@ -176,7 +176,7 @@ class Player extends BodyComponent<AncientGame>{
 
     body.linearVelocity = Vector2(horizontalMovement * moveSpeed, verticalMovement * moveSpeed);
     animation.setAnimation(body.linearVelocity);
-    rayOrigin = const Offset(0, 0);
+    rayOrigin = const Offset(0, -4);
 
     //arrow on direction of the movement
     
@@ -188,7 +188,7 @@ class Player extends BodyComponent<AncientGame>{
       rayDirection = rayDirection / rayDirection.distance;
     
     arrow.direction = rayDirection.toVector2();
-    final Ray2 ray = Ray2(origin:position, direction:Vector2(rayDirection.dx, rayDirection.dy));
+    final Ray2 ray = Ray2(origin:Vector2(position.x, position.y -4), direction:Vector2(rayDirection.dx, rayDirection.dy));
     final result = game.collisionDetection.raycast(ray, maxDistance:rayDistance);
 
     if(result != null && (result.hitbox?.parent?.parent is Readable || result.hitbox?.parent?.parent is AlienComputer)){
