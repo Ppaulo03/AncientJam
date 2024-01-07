@@ -15,18 +15,14 @@ class AudioController {
   final Map<String, AudioPlayer> _players = {};
 
   void addPlayer(String key, String song, {bool loop = false}) {
-    if(_players.containsKey(key)) return;
-    if(loop)
-    {
-      FlameAudio.loopLongAudio(song).then((value)
-      {
+    if (_players.containsKey(key)) return;
+    if (loop) {
+      FlameAudio.loopLongAudio(song).then((value) {
         _players[key] = value;
         value.pause();
       });
-    }
-    else
-    {
-      FlameAudio.playLongAudio(song).then((value){
+    } else {
+      FlameAudio.playLongAudio(song).then((value) {
         _players[key] = value;
         value.pause();
       });
@@ -34,22 +30,23 @@ class AudioController {
   }
 
   void resume(String key) {
-    if(_players.containsKey(key) && !isMuted)
-    {
-      _players[key]!.resume();
+    if (_players.containsKey(key) && !isMuted) {
+       if (_players[key]!.state == PlayerState.paused) {
+             _players[key]!.resume();
+      }
     }
   }
-  
+
   void pause(String key) {
-    if(_players.containsKey(key))
-    {
-      _players[key]!.pause();
+    if (_players.containsKey(key)) {
+      if (_players[key]!.state == PlayerState.playing) {
+        _players[key]!.pause();
+      }
     }
   }
 
   void play(String key) {
-    if(isMuted) return;
+    if (isMuted) return;
     FlameAudio.playLongAudio(key);
   }
-  
 }
