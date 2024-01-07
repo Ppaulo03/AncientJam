@@ -45,7 +45,7 @@ class InputManager extends Component{
       else if (event.logicalKey == LogicalKeyboardKey.keyF) {
         setCommand(Command.showText, isKeyDown);
       }
-      else if (event.logicalKey == LogicalKeyboardKey.keyG) {
+      else if (event.logicalKey == LogicalKeyboardKey.keyE) {
         setCommand(Command.openComputer, isKeyDown);
       }
       else if(event.logicalKey == LogicalKeyboardKey.escape)

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:ancient_game/Itens/alien_computer.dart';
 import 'package:ancient_game/Itens/alien_device_pickable.dart';
 import 'package:ancient_game/Itens/door.dart';
+import 'package:ancient_game/Itens/readable.dart';
 import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/player.dart';
 import 'package:ancient_game/ancient_game.dart';
@@ -61,11 +62,11 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
           add(
             RectangleComponent(
               paint: Paint()
-                ..color = const Color.fromARGB(255, 1, 241, 53)
+                ..color = const Color.fromARGB(0, 0, 241, 255)
                 ..style = PaintingStyle.stroke,
               position: Vector2(object.x, object.y),
               size: Vector2(object.width, object.height),
-              children: [RectangleHitbox()],
+              children: [RectangleHitbox()..debugMode = game.debug],
             )
           );
           
@@ -108,6 +109,9 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
           door = Door(pos:position);
           add(door!);
           break;
+
+        case 'Readable':
+          add(Readable(pos: position));
         default:
           break;
       }

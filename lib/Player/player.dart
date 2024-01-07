@@ -7,6 +7,7 @@ import 'package:ancient_game/Itens/alien_device.dart';
 import 'package:ancient_game/Itens/alien_device_pickable.dart';
 import 'package:ancient_game/Itens/alien_keyboard.dart';
 import 'package:ancient_game/Itens/door.dart';
+import 'package:ancient_game/Itens/readable.dart';
 import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/animation.dart';
 import 'package:ancient_game/Player/indicator_arrow.dart';
@@ -39,7 +40,9 @@ class Player extends BodyComponent<AncientGame>{
   final int waitTimeMilliseconds = 1000;
   late final AlienDevice alienDevice;
   bool hasAlienDevice = false;
+
   final AlienKeyboard alienKeyboard = AlienKeyboard();
+  final WritingClue writingClue = WritingClue();
 
   bool isScanning = false;
   Vector2? wallPos;
@@ -131,7 +134,15 @@ class Player extends BodyComponent<AncientGame>{
       }
       return;
     }
-    
+    else if(writingClue.isActive)
+    {
+      if(inputManager.commands[Command.exitComputer]!)
+      {
+        writingClue.isActive = false;
+        remove(writingClue);
+      }
+      return;
+    }  
     _move(dt);
     _raycast();
     _useItem();
@@ -180,32 +191,22 @@ class Player extends BodyComponent<AncientGame>{
     final Ray2 ray = Ray2(origin:position, direction:Vector2(rayDirection.dx, rayDirection.dy));
     final result = game.collisionDetection.raycast(ray, maxDistance:rayDistance);
 
-    if(!hasAlienDevice)
-    {
-      if(result != null && result.hitbox?.parent?.parent is AlienDevicePickable){
-        lastObject = result.hitbox?.parent?.parent as AlienDevicePickable;
-        wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
-      }
-      else
-      {
-        wallPos = null;
-        lastObject = null;
-        audioController.pause('longScan');
-      }
-      return;
-    }
-    
-    if(result != null && result.hitbox?.parent is RectangleComponent){
-      lastObject = null;
+    if(result != null && (result.hitbox?.parent?.parent is Readable || result.hitbox?.parent?.parent is AlienComputer)){
       wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
-      audioController.pause('longScan');
     }
 
+    if(result != null && result.hitbox?.parent?.parent is AlienDevicePickable){
+      lastObject = result.hitbox?.parent?.parent as AlienDevicePickable;
+      wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
+    }
     else if(result != null && result.hitbox?.parent?.parent is ScannableItem)
     {
       lastObject = result.hitbox?.parent?.parent as ScannableItem;
-      lastObject.scan = true;
-      audioController.resume('longScan');   
+      if(hasAlienDevice)
+      {
+        lastObject.scan = true;
+        audioController.resume('longScan');   
+      }
     }
     else if(result != null && result.hitbox?.parent?.parent is Door)
     {
@@ -222,19 +223,15 @@ class Player extends BodyComponent<AncientGame>{
     }
   }
 
+
+
+
   void _useItem(){
     if(inputManager.commands[Command.showText]!){
       inputManager.commands[Command.showText] = false;
       if(isScanning) return;
-      if(lastObject is AlienDevicePickable) 
-      {
-        hasAlienDevice = true;
-        add(alienDevice);
-        lastObject.pick();
-        lastObject = null;
-      }
-      else if(lastObject is ScannableItem) 
-      {
+      
+      if(lastObject is ScannableItem && hasAlienDevice) {
         final String text = lastObject!.description;
         isScanning = true;
         alienDevice.scan();
@@ -248,11 +245,22 @@ class Player extends BodyComponent<AncientGame>{
     }
     else if(inputManager.commands[Command.openComputer]!)
     {
-      if(lastObject is AlienComputer) 
+      if(lastObject is AlienDevicePickable) {
+        hasAlienDevice = true;
+        add(alienDevice);
+        lastObject.pick();
+        lastObject = null;
+      }
+      else if(lastObject is AlienComputer) 
       {
         add(alienKeyboard);
         alienKeyboard.isActive = true;
-        audioController.pause('longScan.wav');
+        lastObject = null;
+      }
+      else if(lastObject is Readable)
+      {
+        add(writingClue);
+        writingClue.isActive = true;
         lastObject = null;
       }
     }
