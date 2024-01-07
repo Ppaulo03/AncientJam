@@ -192,12 +192,12 @@ class Player extends BodyComponent<AncientGame>{
     final result = game.collisionDetection.raycast(ray, maxDistance:rayDistance);
 
     if(result != null && (result.hitbox?.parent?.parent is Readable || result.hitbox?.parent?.parent is AlienComputer)){
-      wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
+      wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/264);
     }
 
     if(result != null && result.hitbox?.parent?.parent is AlienDevicePickable){
       lastObject = result.hitbox?.parent?.parent as AlienDevicePickable;
-      wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/2);
+      wallPos = result.intersectionPoint! + rayDirection.toVector2()*(game.blockSize/264);
     }
     else if(result != null && result.hitbox?.parent?.parent is ScannableItem)
     {
