@@ -45,8 +45,8 @@ class AudioController {
     }
   }
 
-  void play(String key) {
+  void play(String key,{double volume = 1}) {
     if (isMuted) return;
-    FlameAudio.playLongAudio(key);
+    FlameAudio.playLongAudio(key, volume: volume);
   }
 }

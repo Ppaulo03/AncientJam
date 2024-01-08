@@ -24,7 +24,7 @@ class IndicatorArrow extends SpriteComponent with HasGameRef<AncientGame>{
 
 
 
-    position  = Vector2(0, 0);
+    position  = Vector2(0, -4);
     if(direction.x < 0){
       position.x -= playerSize.x/2 + offset.x*direction.x.abs();
     }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ancient_game/Components/audio_controller.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -44,7 +45,7 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
   bool isActive = false;
   bool reset = false;
   String password = '';
-
+  late AudioController audioController;
 
   @override
   FutureOr<void> onLoad() {
@@ -63,7 +64,7 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
 
     sprite = Sprite(game.images.fromCache('sprites/alien-computer-input.png'));
     position = Vector2(-20, -20);
-    
+    audioController = AudioController.instance;
     return super.onLoad();
   }
   
@@ -73,6 +74,7 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
       message.text = '';
       reset = false;
     }
+    audioController.play('keySound.wav', volume: 0.2);
     if(key == 'ESC'){
       message.text = '';
       parent?.remove(this);
