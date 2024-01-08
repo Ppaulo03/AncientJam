@@ -32,11 +32,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 23,
+            "scale": 5.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 176.1086956521739,
-                "y": 26.782608695652172
+                "x": 266.0909090909091,
+                "y": 178
             }
         },
         "dungeon.tmx#dugeon-assets2": {

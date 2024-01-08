@@ -34,7 +34,8 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
   int levelIndex = 0;
 
   FpsTextComponent? fpsText;
-  String password = 'ababababa';
+  String password = 'mnlcgelij';
+
   bool gotIt = false;
   Door? door;
 
@@ -71,7 +72,7 @@ class AncientGame extends Forge2DGame with KeyboardEvents, HasCollisionDetection
     if(clear) removeAll([cam, gameWorld]);
     gameWorld = nextScreen;
     
-    cam = CameraComponent.withFixedResolution(world:gameWorld ,width: width*blockSize, height: height*blockSize);
+    cam = CameraComponent.withFixedResolution(world:gameWorld ,width: width*blockSize/2, height: height*blockSize/2);
     if(currentScreen != Screen.game) cam.viewfinder.anchor = Anchor.topLeft;
     
    

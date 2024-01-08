@@ -13,7 +13,7 @@ class AlienComputer extends ScannableItem{
 
   @override
   Future<void> onLoad() {
-    description = 'ab';
+    description = 'gm';
     final image = game.images.fromCache('sprites/objects/input-device.png');
     sprite = SpriteComponentCustom(sprite: Sprite(image), position: Vector2(-size.x/2, -size.y/2), size: size);
     return super.onLoad();

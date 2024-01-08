@@ -23,9 +23,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   fonts:
-    - family: joystix monospace
+    - family: joystixmonospace
       fonts: 
-        - asset: fonts/joystix monospace.otf
+        - asset: fonts/joystixmonospace.otf
         
     - family: alien
       fonts: 

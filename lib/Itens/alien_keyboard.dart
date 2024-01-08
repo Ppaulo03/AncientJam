@@ -42,6 +42,8 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
   };
 
   late TextComponent message;
+  late TextComponent hintText;
+
   bool isActive = false;
   bool reset = false;
   String password = '';
@@ -60,7 +62,12 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
         fontSize: 4,
         color: Color(0xffc7cfcc)
     )));
-    add(message);
+    hintText = TextComponent(size: size, position: Vector2(-50, 0), text: '' ,textRenderer: TextPaint(style: const TextStyle(
+        fontFamily: 'joystixmonospace',
+        fontSize: 4,
+        color: Color(0xffc7cfcc)
+    )));
+    addAll([message,hintText]);
 
     sprite = Sprite(game.images.fromCache('sprites/alien-computer-input.png'));
     position = Vector2(-20, -20);
@@ -74,7 +81,7 @@ class AlienKeyboard extends SpriteComponent with HasGameRef<AncientGame>
       message.text = '';
       reset = false;
     }
-    audioController.play('keySound.wav', volume: 0.2);
+    //audioController.play('keySound.wav', volume: 0.2);
     if(key == 'ESC'){
       message.text = '';
       parent?.remove(this);

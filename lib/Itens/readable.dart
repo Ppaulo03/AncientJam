@@ -16,7 +16,7 @@ class Readable extends ScannableItem
 
   @override
   Future<void> onLoad() {
-    description = 'ab';
+    description = 'em';
     final image = game.images.fromCache('sprites/objects/book.png');
     sprite = SpriteComponentCustom(sprite: Sprite(image), position: Vector2(-size.x/2, -size.y/2), size: size);
     return super.onLoad();
@@ -42,26 +42,41 @@ class Readable extends ScannableItem
 
 }
 
-class WritingClue extends SpriteComponent with HasGameRef<AncientGame>{
+class WritingClue extends PositionComponent with HasGameRef<AncientGame>{
   late TextComponent message;
+  late TextComponent messageLine2;
+  late TextComponent messageLine3;
   bool isActive = false;
 
   @override
   FutureOr<void> onLoad() {
     priority = 100;
     size = Vector2(64, 16);
-    message = TextComponent(size: size, position: Vector2(0, 0), text: '' ,textRenderer: TextPaint(style: const TextStyle(
-        fontFamily: 'joystix monospace',
+    message = TextComponent(size: size, position: Vector2(0, -10), text: 'The only way out is using the device.' ,textRenderer: TextPaint(style: const TextStyle(
+        fontFamily: 'joystixmonospace',
         fontSize: 4,
         color: Color(0xffc7cfcc)
     )));
-    add(message);
+      messageLine2 = TextComponent(size: size, position: Vector2(0, -4), text: 'the password of the door is:' ,textRenderer: TextPaint(style: const TextStyle(
+        fontFamily: 'joystixmonospace',
+        fontSize: 4,
+        color: Color(0xffc7cfcc)
+    )));
+      messageLine3 = TextComponent(size: size, position: Vector2(0,2), text: 'knowledge - poison - sledgeHammer  - coffin - gem' ,textRenderer: TextPaint(style: const TextStyle(
+        fontFamily: 'joystixmonospace',
+        fontSize: 4,
+        color: Color(0xffc7cfcc)
+    )));
+      var messageLine4 = TextComponent(size: size, position: Vector2(9, -16), text: 'to exit' ,textRenderer: TextPaint(style: const TextStyle(
+        fontFamily: 'joystixmonospace',
+        fontSize: 2,
+        color: Color(0xffc7cfcc)
+    )));
+    addAll([message,messageLine2,messageLine3,messageLine4]);
 
-    final ExitKey exitKey = ExitKey(key: 'X', position:Vector2(0, -15), size: Vector2(16, 16));
+    final ExitKey exitKey = ExitKey(key: 'Esc', position:Vector2(0, -20), size: Vector2(8, 8),fontSize: 2.5);
     exitKey.onStateChange = exit;
     add(exitKey);
-
-    sprite = Sprite(game.images.fromCache('sprites/alien-computer-input.png'));
     position = Vector2(-20, -20);
     
     return super.onLoad();
@@ -78,7 +93,8 @@ class ExitKey extends SpriteComponent with TapCallbacks, HasGameRef<AncientGame>
 {
   late final Function onStateChange;
   final String key;
-  ExitKey({required this.key, required super.position, required super.size});
+  double? fontSize;
+  ExitKey({required this.key, this.fontSize, required super.position, required super.size });
   late ShapeHitbox hitbox;
 
   @override
@@ -86,10 +102,10 @@ class ExitKey extends SpriteComponent with TapCallbacks, HasGameRef<AncientGame>
     debugMode = false;
     sprite = Sprite(game.images.fromCache('sprites/button-keyboard.png'));
     super.onLoad();
-    add(TextComponent(position: Vector2(size.x/8, size.y/8), text: key, textRenderer: TextPaint(style: const TextStyle(
-        fontFamily: 'joystix monospace',
-        fontSize: 3.75,
-        color: Color(0xffc7cfcc)
+    add(TextComponent(position: Vector2(size.x/8, size.y/8), text: key, textRenderer: TextPaint(style:  TextStyle(
+        fontFamily: 'joystixmonospace',
+        fontSize:fontSize ?? 3.75,
+        color: const Color(0xffc7cfcc)
     ))));
     hitbox = RectangleHitbox();
     add(hitbox);

@@ -11,6 +11,7 @@ import 'package:ancient_game/Itens/readable.dart';
 import 'package:ancient_game/Itens/scannable_item.dart';
 import 'package:ancient_game/Player/animation.dart';
 import 'package:ancient_game/Player/indicator_arrow.dart';
+import 'package:ancient_game/Screens/ui_element.dart';
 import 'package:ancient_game/ancient_game.dart';
 import 'package:ancient_game/Components/input_manager.dart';
 
@@ -68,6 +69,7 @@ class Player extends BodyComponent<AncientGame>{
 
     arrow = IndicatorArrow(playerSize: size);
     add(arrow);
+    add(UITextElement(position: Vector2(-80, 82), text: 'E-INTERACT F-USE SCAN', size: 3, color: Colors.white));
     audioController = AudioController.instance;
     audioController.addPlayer('longScan', 'longScan.wav',  loop: true, volume: 0.5);
   }
@@ -84,7 +86,8 @@ class Player extends BodyComponent<AncientGame>{
           (wallPos!.x/game.blockSize).floorToDouble()*game.blockSize - position.x,
           (wallPos!.y/game.blockSize).floorToDouble()*game.blockSize - position.y
               );
-      canvas.drawRect(Rect.fromLTWH(blockPos.x, blockPos.y, 16, 16), Paint() ..color = Colors.red ..style = PaintingStyle.stroke);
+      canvas.drawRect(Rect.fromLTWH(blockPos.x, blockPos.y, 16, 16), Paint() ..color = Colors.white ..style = PaintingStyle.stroke);
+      
     }  
   }
 
@@ -123,7 +126,7 @@ class Player extends BodyComponent<AncientGame>{
           audioController.play('Wrong.wav');
         }
         
-        alienKeyboard.message.text = '$rigths / 5';
+        alienKeyboard.hintText.text = 'you got $rigths / 5';
         alienKeyboard.password = '';
       }
       if(inputManager.commands[Command.exitComputer]!)

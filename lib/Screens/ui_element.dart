@@ -20,8 +20,8 @@ class UIButton extends PositionComponent with TapCallbacks, HasGameRef<AncientGa
       // debugMode = true;
       anchor = Anchor.center;
       TextPaint renderer = TextPaint(style: TextStyle(
-        fontFamily: 'joystix monospace', fontSize: fontSize,
-        color: color?? const Color(0xFF819796)
+        fontFamily: 'joystixmonospace', fontSize: fontSize,
+        color: color?? const Color(0xFFffffff).withAlpha(150)
       ));
     addAll([
         TextComponent(
@@ -43,7 +43,7 @@ class UITextElement extends TextComponent
   UITextElement({required Vector2 position, required String text, required double size, required Color color, Anchor anchor = Anchor.center})
   {
     TextPaint renderer = TextPaint(style: TextStyle(
-      fontFamily: 'joystix monospace', fontSize: size,
+      fontFamily: 'joystixmonospace', fontSize: size,
     color: color
     ));
 
