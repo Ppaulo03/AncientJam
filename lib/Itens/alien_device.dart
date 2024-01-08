@@ -39,9 +39,9 @@ class AlienDevice extends SpriteAnimationGroupComponent with HasGameRef<AncientG
     };
     current = AnimationStates.idle;
     Color color = const Color(0xffffffff).withAlpha(100);
-    message = TextComponent(anchor: Anchor.center,position: Vector2(size.x/2 + 0.8   , size.y/2-1.5), text: '' ,textRenderer: TextPaint(style: TextStyle(
+    message = TextComponent(anchor: Anchor.center,position: Vector2(size.x/2 + 0.8   , size.y/2-1.5)  ,text: '' ,textRenderer: TextPaint(style: TextStyle(
         fontFamily: 'alien',
-        fontSize: 6,
+        fontSize: 4.5,
         color: color
     ))); 
     add(message);
