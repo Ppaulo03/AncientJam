@@ -13,8 +13,10 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 class MainMenu extends Forge2DWorld with HasGameRef<AncientGame>{
   @override
   Future<FutureOr<void>> onLoad() async {
-    //await FlameAudio.bgm.stop();
-    //await FlameAudio.bgm.play('radio.wav', volume: 0.005);
+    await  FlameAudio.audioCache.loadAll(['scan.wav','longScan.wav','radio.wav']);
+    if(FlameAudio.bgm.isPlaying)
+    {FlameAudio.bgm.stop();}
+    FlameAudio.bgm.play('radio.wav', volume: 0.005);
     addAll([
       BackgroundTile(),
       UITextElement(size: 20, position: Vector2(game.blockSize/2*game.width/2, 45) , color: const Color(0xFFFFFFFF), text: "BABEL'S DUNGEON"),
@@ -24,8 +26,7 @@ class MainMenu extends Forge2DWorld with HasGameRef<AncientGame>{
           label: 'Play',
           onTap: () async {
           game.nextLevel.call();
-           await FlameAudio.bgm.stop();
-           await FlameAudio.bgm.play('background.wav', volume: 0.05);
+      
 
           }), 
       UIButton(size: Vector2(57.5,12), position: Vector2(game.blockSize/2*game.width/2,90),label:'Credits', onTap: game.credits)

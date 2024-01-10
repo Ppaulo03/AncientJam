@@ -10,6 +10,8 @@ import 'package:ancient_game/ancient_game.dart';
 import 'package:flame/collisions.dart';
 
 import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +27,16 @@ class Level extends Forge2DWorld with HasGameRef<AncientGame>{
   
   @override
   FutureOr<void> onLoad() async{
-    final TiledComponent level = await TiledComponent.load('dungeon.tmx', Vector2.all(16), useAtlas: false);
+    final TiledComponent level = await TiledComponent.load('dungeon.tmx', Vector2.all(16) ,useAtlas: false,atlasMaxX: 500,atlasMaxY: 500);
+    await FlameAudio.bgm.stop();
+    await FlameAudio.bgm.play('background.wav', volume: 0.05);
     add(level);
     _addColliders(level.tileMap);
     _addObjects(level.tileMap);
     await _addUI();
 
   }
-
+  
   _addColliders(RenderableTiledMap  tileMap)
   {
     final layer = tileMap.getLayer<ObjectGroup>('Collision');
